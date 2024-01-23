@@ -26,11 +26,38 @@ function setup(){
   cnv.mouseClicked(togglePlay);
   fft = new p5.FFT([0.8], [512]);
   sound.amp(0.9);
-  outerDynCircle = new DynamicCircle(width /2, height/2, 30, 3);
+  outerDynCircle = new DynamicCircle(width /2, height/2, 30, 3);    
+  
+  // place our canvas, making it fit our container
+  canvasContainer = $("#canvas-container");
+  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+  canvas.parent("canvas-container");
+  // resize canvas is the page is resized
+  $(window).resize(function() {
+      console.log("Resizing...");
+      resizeCanvas(canvasContainer.width(), canvasContainer.height());
+  });
+  
+  var centerHorz = windowWidth / 2;
+  var centerVert = windowHeight / 2;
 }
 
 function draw(){
   background("#132A13");
+  var centerHorz = canvasContainer.width() / 2 - 125;
+  var centerVert = canvasContainer.height() / 2 - 125;
+  fill(234, 31, 81);
+  noStroke();
+  rect(centerHorz, centerVert, 250, 250);
+  fill(255);
+  textStyle(BOLD);
+  textSize(140);
+  text("p5*", centerHorz + 10, centerVert + 200);
+
+
+
+
+
   dynCircle = new DynamicCircle(width /2, height/2, 30, globalProgression);
 
   let fft_waveform = fft.waveform();
