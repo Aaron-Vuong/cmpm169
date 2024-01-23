@@ -17,16 +17,15 @@ globalProgression = 0;
 expanding = true;
 playing = false;
 
-function preload(){
-  sound = loadSound('assets/Vanessa Carlton - A Thousand Miles.mp3');
+function preload() {
+    sound = loadSound('assets/Vanessa Carlton - A Thousand Miles.mp3');
 }
 
 function setup(){
   let cnv = createCanvas(400,400);
   cnv.mouseClicked(togglePlay);
   fft = new p5.FFT([0.8], [512]);
-  sound.amp(0.9);
-  outerDynCircle = new DynamicCircle(width /2, height/2, 30, 3);    
+  sound.amp(0.9);  
   
   // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
@@ -46,13 +45,7 @@ function draw(){
   background("#132A13");
   var centerHorz = canvasContainer.width() / 2 - 125;
   var centerVert = canvasContainer.height() / 2 - 125;
-  fill(234, 31, 81);
-  noStroke();
-  rect(centerHorz, centerVert, 250, 250);
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz + 10, centerVert + 200);
+  outerDynCircle = new DynamicCircle(width /2, height/2, 30, 3);  
 
 
 
