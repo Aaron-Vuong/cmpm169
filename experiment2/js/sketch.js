@@ -13,55 +13,50 @@ const VALUE2 = 2;
 // Globals
 let myInstance;
 let canvasContainer;
+globalProgression = 0;
+expanding = true;
+playing = false;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
+function preload(){
+  sound = loadSound('assets/Vanessa Carlton - A Thousand Miles.mp3');
 }
 
-// setup() function is called once when the program starts
-function setup() {
-    // place our canvas, making it fit our container
-    canvasContainer = $("#canvas-container");
-    let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-    canvas.parent("canvas-container");
-    // resize canvas is the page is resized
-    $(window).resize(function() {
-        console.log("Resizing...");
-        resizeCanvas(canvasContainer.width(), canvasContainer.height());
-    });
-    // create an instance of the class
-    myInstance = new MyClass(VALUE1, VALUE2);
-
-    var centerHorz = windowWidth / 2;
-    var centerVert = windowHeight / 2;
+function setup(){
+  let cnv = createCanvas(400,400);
+  cnv.mouseClicked(togglePlay);
+  fft = new p5.FFT([0.8], [512]);
+  sound.amp(0.9);
+  outerDynCircle = new DynamicCircle(width /2, height/2, 30, 3);
 }
 
-// draw() function is called repeatedly, it's the main animation loop
-function draw() {
-    background(220);    
-    // call a method on the instance
-    myInstance.myMethod();
+function draw(){
+  background("#132A13");
+  dynCircle = new DynamicCircle(width /2, height/2, 30, globalProgression);
 
-    // Put drawings here
-    var centerHorz = canvasContainer.width() / 2 - 125;
-    var centerVert = canvasContainer.height() / 2 - 125;
-    fill(234, 31, 81);
-    noStroke();
-    rect(centerHorz, centerVert, 250, 250);
-    fill(255);
-    textStyle(BOLD);
-    textSize(140);
-    text("p5*", centerHorz + 10, centerVert + 200);
+  let fft_waveform = fft.waveform();
+  dynCircle.plotCircle(new Array(360).fill(1), 0);
+  dynCircle.plotCircle(fft_waveform, 0);
+  outerDynCircle.plotCircle(fft_waveform, 0);
+  if ((globalProgression >= 5 || !expanding) && playing) {
+    globalProgression -= 0.01
+    expanding = false;
+  }
+  if ((globalProgression <= 0.5 || expanding) && playing) {
+    globalProgression += 0.01
+    expanding = true;
+  }
+  stroke(255);
+  text('tap to play', 20, 20);
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+
+function togglePlay() {
+  if (sound.isPlaying()) {
+    sound.pause();
+    // Stop expanding circles if the sound is not playing.
+    playing = false;
+  } else {
+    sound.loop();
+    playing = true;
+  }
 }
