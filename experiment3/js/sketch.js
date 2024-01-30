@@ -16,8 +16,8 @@ function setup() {
 
   // place our canvas, making it fit our container
   canvasContainer = $("#canvas-container");
-  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
-  canvas.parent("canvas-container");
+  let canvas = createCanvas(500, 500);
+  canvas.parent("canvas-container")
   // resize canvas is the page is resized
   $(window).resize(function() {
       console.log("Resizing...");
@@ -28,7 +28,6 @@ function setup() {
   var centerVert = windowHeight / 2;
 
 
-  createCanvas(500, 500);
   let current_color = color(0, 0, 0);
   brush = new Brush(0, 0, 0, 0, 2);
   // Every Square starts as white
@@ -45,9 +44,9 @@ function setup() {
   let r_inp = createInput('0');
   let g_inp = createInput('0');
   let b_inp = createInput('0');
-  r_inp.position(30, height - 70);
-  g_inp.position(30, height - 45);
-  b_inp.position(30, height - 20);
+  r_inp.position(80, canvasContainer.height() * 2 + 145);
+  g_inp.position(80, canvasContainer.height() * 2 + 170);
+  b_inp.position(80, canvasContainer.height() * 2 + 195);
   r_inp.input(() => {
     brush.r = r_inp.value();
     brush.current_color = color(brush.r, brush.g, brush.b);
