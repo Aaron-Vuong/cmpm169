@@ -59,8 +59,6 @@ function setup() {
     brush.b = b_inp.value();
     brush.current_color = color(brush.r, brush.g, brush.b);
   });
-
-  
 }
 
 function draw() {
