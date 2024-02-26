@@ -58,7 +58,7 @@ function getEvents() {
           if (request > 0) {
             if (!(entry.name in events || events[entry.name] == request)) {
                 console.log("Hey");
-                events[entry.name] = {"w": 0, "h": request * 50, "rotate": random(360), "red": request * 50, "request": request};
+                events[entry.name] = {"w": 0, "h": request * 1, "rotate": random(360), "red": request * 5, "request": request};
             }
 
           }
